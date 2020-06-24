@@ -1,0 +1,36 @@
+name: 'GAE Version Cleanup'
+author: 'Robin Welin'
+description: 'Cleanup Google App Engine versions'
+branding:
+  icon: 'cloud-drizzle'
+  color: 'blue'
+inputs:
+  GCP_PROJECT:
+    description: 'GCP Project ID'
+    required: true
+  GCP_APPLICATION_CREDENTIALS:
+    description: 'GCP authorization credentials'
+    required: true
+  DRY_RUN:
+    description: 'Runs the action and outputs all info, but do not deletes any versions'
+    required: false
+    default: 'false'
+  SKIP_ALLOCATED:
+    description: 'Skip versions with traffic allocation'
+    required: false
+    default: 'true'
+  SKIP_COUNT:
+    description: 'Skip the newest number of versions'
+    required: false
+    default: 5
+  SKIP_UNIQUE:
+    description: 'Skip the newest version each unique date'
+    required: false
+    default: 'false'
+  SKIP_UNIQUE_COUNT:
+    description: 'Skip the newest version for the number of unqie dates'
+    required: false
+    default: 10
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

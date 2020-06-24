@@ -1,0 +1,7 @@
+*.test.js
+*.test.jsx
+*.test.ts
+*.test.tsx
+dist/
+lib/
+node_modules/

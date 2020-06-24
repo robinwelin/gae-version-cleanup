@@ -1,0 +1,57 @@
+{
+  "name": "gh-action-gae-version-cleanup",
+  "version": "0.0.2",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --noemit",
+    "lint": "eslint ./src/**/*.ts",
+    "pack": "ncc build src/index.ts",
+    "prettier": "prettier --write ./src/**/*.ts",
+    "test": "jest",
+    "all": "npm run build && npm run prettier && npm run lint && npm run pack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robinwelin/gh-action-gae-version-cleanup.git"
+  },
+  "keywords": [
+    "actions",
+    "gcp",
+    "gae",
+    "app engine"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robinwelin/gh-action-gae-version-cleanup/issues"
+  },
+  "homepage": "https://github.com/robinwelin/gh-action-gae-version-cleanup#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "googleapis": "^50.0.0",
+    "json-stringify-pretty-compact": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.13.5",
+    "@typescript-eslint/eslint-plugin": "^2.32.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-typescript": "^7.2.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.10.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "prettier": "2.0.5",
+    "ts-jest": "^25.5.1",
+    "typescript": "^3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run all && git add ."
+    }
+  }
+}
