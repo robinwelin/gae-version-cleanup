@@ -78,6 +78,7 @@ jobs:
           GCP_APPLICATION_CREDENTIALS: ${{secrets.GCP_SERVICE_ACCOUNT}}
           SKIP_UNIQUE: true
           SKIP_UNIQUE_COUNT: 20
+```
 
 ## Licence
 
