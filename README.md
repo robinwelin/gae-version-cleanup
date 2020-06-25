@@ -55,6 +55,30 @@ jobs:
           SKIP_UNIQUE_COUNT: 20
 ```
 
+## Full example multiple GCP projects with same service account
+
+```yaml
+name: Google App Engine Version Cleanup
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    name: 'GAE Version Cleanup'
+    runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        GCP_PROJECTS: [project_1, project_2, project_3]
+    steps:
+      - name: Running cleanup for ${{ matrix.GCP_PROJECTS }}
+        uses: robinwelin/gae-version-cleanup@master
+        with:
+          GCP_PROJECT: ${{ matrix.GCP_PROJECTS }}
+          GCP_APPLICATION_CREDENTIALS: ${{secrets.GCP_SERVICE_ACCOUNT}}
+          SKIP_UNIQUE: true
+          SKIP_UNIQUE_COUNT: 20
+
 ## Licence
 
 [MIT License](https://github.com/robinwelin/gae-version-cleanup/blob/master/LICENSE)
