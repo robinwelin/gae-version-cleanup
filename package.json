@@ -1,5 +1,5 @@
 {
-  "name": "gh-action-gae-version-cleanup",
+  "name": "gae-version-cleanup",
   "version": "0.0.2",
   "description": "",
   "main": "dist/index.js",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robinwelin/gh-action-gae-version-cleanup.git"
+    "url": "git+https://github.com/robinwelin/gae-version-cleanup.git"
   },
   "keywords": [
     "actions",
@@ -25,9 +25,9 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/robinwelin/gh-action-gae-version-cleanup/issues"
+    "url": "https://github.com/robinwelin/gae-version-cleanup/issues"
   },
-  "homepage": "https://github.com/robinwelin/gh-action-gae-version-cleanup#readme",
+  "homepage": "https://github.com/robinwelin/gae-version-cleanup#readme",
   "dependencies": {
     "@actions/core": "^1.2.4",
     "googleapis": "^50.0.0",
