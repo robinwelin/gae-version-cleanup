@@ -1,6 +1,6 @@
 {
   "name": "gae-version-cleanup",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,8 @@
     "pack": "ncc build src/index.ts",
     "prettier": "prettier --write ./src/**/*.ts",
     "test": "jest",
-    "all": "npm run build && npm run prettier && npm run lint && npm run pack"
+    "all": "npm install && npm run build && npm run prettier && npm run lint && npm run pack",
+    "dev": "npm run pack && node ./dist/index.js"
   },
   "repository": {
     "type": "git",
