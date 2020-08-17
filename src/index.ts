@@ -143,14 +143,14 @@ export const skipUnique = (versions: VersionType[], serviceID: string) => {
   let keepCounter = 0
   let lastVersionDate: string = ''
   return versions.filter((element) => {
-    if (keepCounter >= CONFIG.SKIP_UNIQUE_COUNT) return false
+    if (keepCounter >= CONFIG.SKIP_UNIQUE_COUNT) return true
 
     const currentVersionDate = new Date(element.date).toDateString()
-    if (lastVersionDate === currentVersionDate) return false
+    if (lastVersionDate === currentVersionDate) return true
 
     keepCounter += 1
     lastVersionDate = currentVersionDate
-    return true
+    return false
   })
 }
 
