@@ -25,6 +25,26 @@ export const loggerInfo = (value: string) => {
   }
 }
 
+export const loggerError = (err: string) => {
+  // Ignore logging if jest tests
+  if (CONFIG.NODE_ENV !== 'test') {
+    // Local logging
+    if (CONFIG.NODE_ENV === 'development') console.error(err)
+    // GitHub Action Logging
+    else core.error(err)
+  }
+}
+
+export const setFailed = (value: string) => {
+  // Ignore if jest tests
+  if (CONFIG.NODE_ENV !== 'test') {
+    // Local
+    if (CONFIG.NODE_ENV === 'development') console.warn(value)
+    // GitHub Action
+    else core.setFailed(value)
+  }
+}
+
 export const asyncForEach = async (array: any, callback: any) => {
   array.forEach(async (element: any, index: number, orgArr: any) => {
     await callback(element, index, orgArr)
@@ -123,14 +143,13 @@ export const skipUnique = (versions: VersionType[], serviceID: string) => {
   let keepCounter = 0
   let lastVersionDate: string = ''
   return versions.filter((element) => {
-    if (keepCounter < CONFIG.SKIP_UNIQUE_COUNT) {
-      const currentVersionDate = new Date(element.date).toDateString()
-      if (lastVersionDate === currentVersionDate) return true
+    if (keepCounter >= CONFIG.SKIP_UNIQUE_COUNT) return false
 
-      keepCounter += keepCounter
-      lastVersionDate = currentVersionDate
-      return false
-    }
+    const currentVersionDate = new Date(element.date).toDateString()
+    if (lastVersionDate === currentVersionDate) return false
+
+    keepCounter += 1
+    lastVersionDate = currentVersionDate
     return true
   })
 }
@@ -166,11 +185,15 @@ const removeVersions = async (
     `${divider()}\nSID: ${serviceID}: \n${stringify(versions, { maxLength: 254 })}\n${divider()}`
   )
   asyncForEach(versions, async (element: VersionType) => {
-    await appEngine.apps.services.versions.delete({
-      appsId: CONFIG.GCP_PROJECT,
-      servicesId: element.serviceID,
-      versionsId: element.versionID,
-    })
+    try {
+      await appEngine.apps.services.versions.delete({
+        appsId: CONFIG.GCP_PROJECT,
+        servicesId: element.serviceID,
+        versionsId: element.versionID,
+      })
+    } catch (err) {
+      loggerError(err)
+    }
   })
 }
 
@@ -179,7 +202,7 @@ const main = async () => {
     const appEngine = await getAppEngine()
 
     const serviceIDs = await getServices(appEngine)
-    if (!serviceIDs || serviceIDs.length === 0) core.setFailed('App Engine service(s) not found')
+    if (!serviceIDs || serviceIDs.length === 0) setFailed('App Engine service(s) not found')
 
     const removedVersionsResult: {}[] = []
     await asyncForEach(serviceIDs, async (serviceID: string) => {
@@ -199,8 +222,8 @@ const main = async () => {
       removedVersionsResult.push({ service: serviceID, versions: filteredVersions })
     })
   } catch (err) {
-    core.error(err)
-    core.setFailed('Failed to cleanup App Engine versions')
+    loggerError(err)
+    setFailed('Failed to cleanup App Engine versions')
   }
 }
 

@@ -5,6 +5,8 @@ declare type VersionType = {
     date: string;
 };
 export declare const loggerInfo: (value: string) => void;
+export declare const loggerError: (err: string) => void;
+export declare const setFailed: (value: string) => void;
 export declare const asyncForEach: (array: any, callback: any) => Promise<void>;
 export declare const getAppEngine: () => Promise<appengine_v1.Appengine>;
 export declare const getServices: (appEngine: appengine_v1.Appengine) => Promise<string[]>;
