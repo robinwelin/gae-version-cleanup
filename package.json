@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/robinwelin/gae-version-cleanup#readme",
   "dependencies": {
-    "@actions/core": "^1.2.4",
+    "@actions/core": "^1.9.1",
     "googleapis": "^50.0.0",
     "json-stringify-pretty-compact": "^2.0.0"
   },
